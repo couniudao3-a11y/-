@@ -13,12 +13,11 @@
       background-size: cover;
       background-position: center;
     }
-
     .kanji {
       font-size: 80px;
       margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #000;
     }
-
     button {
       font-size: 20px;
       margin-right: 10px;
@@ -28,16 +27,39 @@
       border: none;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #666;
+    }
+    #history {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
   <div class="kanji">翔夢</div>
   <p>この漢字を未来に残しますか？</p>
-  <button onclick="alert('未来に刻まれました')">残す</button>
-  <button onclick="alert('風に消えました')">消す</button>
+  <button onclick="saveChoice('残す')">残す</button>
+  <button onclick="saveChoice('消す')">消す</button>
+
+  <div id="history"></div>
+
+  <script>
+    function saveChoice(choice) {
+      localStorage.setItem("翔夢", choice);
+      alert(choice === "残す" ? "未来に刻まれました" : "風に消えました");
+      showHistory();
+    }
+
+    function showHistory() {
+      const saved = localStorage.getItem("翔夢");
+      if (saved) {
+        document.getElementById("history").textContent = `あなたは「翔夢」を「${saved}」と選びました。`;
+      }
+    }
+
+    window.onload = showHistory;
+  </script>
 </body>
 </html>
